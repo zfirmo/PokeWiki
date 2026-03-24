@@ -12,7 +12,7 @@ To get the project up and running locally, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/zfirmo/PokeWiki.git](https://github.com/zfirmo/PokeWiki)
+   git clone https://github.com/zfirmo/PokeWiki
    cd PokeWiki
    ```
    
