@@ -1,0 +1,5 @@
+CREATE TABLE type(
+	type_id SERIAL PRIMARY KEY,
+	name VARCHAR(20)
+)
+
