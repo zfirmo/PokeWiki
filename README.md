@@ -12,8 +12,8 @@ To get the project up and running locally, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/seu-usuario/nome-do-repo.git](https://github.com/seu-usuario/nome-do-repo.git)
-   cd nome-do-repo
+   git clone https://github.com/zfirmo/PokeWiki
+   cd PokeWiki
    ```
    
 2. **Start the containers**:
@@ -38,10 +38,10 @@ docker-compose.yml: Docker configuration for the services.
 
 🔑 Database Credentials
 
-User: zago!
-Password: secretpassword
-Database: pokewiki
-Port: 5432
+- User: zago!
+- Password: secretpassword
+- Database: pokewiki
+- Port: 5432
 
 ## Creative Process ✏️
 
