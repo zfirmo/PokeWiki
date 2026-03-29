@@ -24,6 +24,21 @@ services:
       - "8080:80" 
     depends_on:
       - db
-
+      
+  app:
+      build: .
+      container_name: pokewiki_nodejs
+      restart: always
+      ports:
+        - "3000:3000"
+      volumes:
+        - .:/app
+        - /app/node_modules
+      environment:
+        - DATABASE_URL=postgresql://zago:secretpassword@db:5432/pokewiki
+      depends_on:
+        - db
+      
 volumes:
   postgres_data:
+
