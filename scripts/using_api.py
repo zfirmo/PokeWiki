@@ -246,9 +246,102 @@ def insert_pokemon_type():
         
         print("Error in connection",e)
 
-# insert_types()
-# insert_abilitys()
-# insert_egg_group()
-# insert_generations()
-# insert_pokemons()
+def insert_pokemon_ability():
+
+    print("Trying to insert Pokemons respectives Abilities")
+
+    try:
+
+        connection = psycopg2.connect(**DB_CONFIG)
+        cursor = connection.cursor()
+        print("Connection with PostgreSQL made with suces")
+
+        for pokemon_number in range(1,1026):
+
+            response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon_number}")
+
+            if response.status_code == 200:
+
+                dados = response.json()
+
+                if len(dados['abilities']) == 3:
+
+                    response1 = requests.get(dados['abilities'][0]['ability']['url'])
+                    response2 = requests.get(dados['abilities'][1]['ability']['url'])
+                    response3 = requests.get(dados['abilities'][2]['ability']['url'])
+
+                    slot1 = response1.json()
+                    slot2 = response2.json()
+                    slot3 = response3.json()
+
+                    sql = """INSERT INTO pokemon_ability(pokemon_id, ability_id, is_hidden)
+                            VALUES (%s, %s, %s)"""
+                    
+
+                    valores1 = (dados['id'],slot1['id'],dados['abilities'][0]['is_hidden'])
+                    valores2 = (dados['id'],slot2['id'],dados['abilities'][1]['is_hidden'])
+                    valores3 = (dados['id'],slot3['id'],dados['abilities'][2]['is_hidden'])
+
+
+                    cursor.execute(sql, valores1)
+                    cursor.execute(sql, valores2)
+                    cursor.execute(sql, valores3)
+
+                    connection.commit()
+
+                    print(f"Insert {dados['name']} abilities:\n SLOT_1 \nNAME {slot1['name']}\nID {slot1['id']}")
+                    print(f"SLOT_2:\nNAME {slot2['name']}\nID {slot2['id']}")
+                    print(f"SLOT_3:\nNAME {slot3['name']}\nID {slot3['id']}\n")
+
+                    
+
+                elif len(dados['abilities']) == 2:
+
+                    response1 = requests.get(dados['abilities'][0]['ability']['url'])
+                    response2 = requests.get(dados['abilities'][1]['ability']['url'])
+
+                    slot1 = response1.json()
+                    slot2 = response2.json()
+
+                    sql = """INSERT INTO pokemon_ability(pokemon_id, ability_id, is_hidden)
+                            VALUES (%s, %s, %s)"""
+                    
+                    valores1 = (dados['id'],slot1['id'],dados['abilities'][0]['is_hidden'])
+                    valores2 = (dados['id'],slot2['id'],dados['abilities'][1]['is_hidden'])
+
+                    cursor.execute(sql, valores1)
+                    cursor.execute(sql, valores2)
+
+                    connection.commit()
+
+                    print(f"Insert {dados['name']} abilities:\n SLOT_1 \nNAME {slot1['name']}\nID {slot1['id']}")
+                    print(f"SLOT_2:\nNAME {slot2['name']}\nID {slot2['id']}\n")
+
+                else:
+
+                    response1 = requests.get(dados['abilities'][0]['ability']['url'])
+
+                    slot1 = response1.json()
+
+                    sql = """INSERT INTO pokemon_ability(pokemon_id, ability_id, is_hidden)
+                            VALUES (%s, %s, %s)"""
+                    
+                    valores1 = (dados['id'],slot1['id'],dados['abilities'][0]['is_hidden'])
+
+                    cursor.execute(sql, valores1)
+
+                    connection.commit()
+
+                    print(f"Insert {dados['name']} abilities: \n SLOT_1\nNAME {slot1['name']}\nID {slot1['id']}\n")
+
+    except Exception as e:
+
+        print("Error in connection",e)
+
+insert_types()
+insert_abilitys()
+insert_egg_group()
+insert_generations()
+insert_pokemons()
 insert_pokemon_type()
+insert_pokemon_ability()
