@@ -2,7 +2,7 @@
 
 This project contains the database infrastructure and initial schema for the Pokewiki application. It uses Docker to orchestrate PostgreSQL and pgAdmin.
 
-## Technologies 🔧
+## Technologies 
 * **Database:** PostgreSQL 15
 * **Management:** pgAdmin 4
 * **Containerization:** Docker & Docker Compose
@@ -30,20 +30,20 @@ To get the project up and running locally, follow these steps:
 
 - Password: admin
 
-📂 Project Structure
+ Project Structure
 
 /sql: Contains all .sql scripts for database initialization.
 
 docker-compose.yml: Docker configuration for the services.
 
-🔑 Database Credentials
+ Database Credentials
 
 - User: zago!
 - Password: secretpassword
 - Database: pokewiki
 - Port: 5432
 
-## Creative Process ✏️
+## Creative Process 
 
 During the process of making this project I used many tools for making my project alive, and making easier to organize my thinking process, the tools I used was:
 
@@ -53,10 +53,10 @@ For organizing my project and write down my own to-do list, organizing in a way 
 
 EasterEgg -> The logo is a little joke with an actual berry in the games named Wiki Berry
 
-![Using Miro](miro.png)
+![Using Miro](images/miro.png)
 
 ### DrawSQL
 
 An site for making an visual schema, I made one before setting up the PostgreSQL tables, this way I know exactly waht I'm going to do and help my to-do list in Miro
 
-![Using DrawSQL](drawsql.png)
+![Using DrawSQL](images/drawsql.png)

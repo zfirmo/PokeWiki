@@ -1,6 +1,5 @@
 import requests
 import psycopg2
-import sqlite3
 from psycopg2 import extras
 
 DB_CONFIG = {
@@ -44,7 +43,7 @@ def insert_types():
 
     except Exception as e:
         
-        print(f"Error in connection: {e}")
+        print(f"Error in connection", e)
 
 def insert_abilitys():
      
@@ -78,7 +77,7 @@ def insert_abilitys():
 
     except Exception as e:
         
-        print("Error in connection")
+        print("Error in connection",e)
 
 def insert_egg_group():
      
@@ -112,7 +111,7 @@ def insert_egg_group():
 
     except Exception as e:
         
-        print("Error in connection")
+        print("Error in connection",e)
 
 def insert_generations():
      
@@ -146,7 +145,7 @@ def insert_generations():
 
     except Exception as e:
         
-        print("Error in connection")
+        print("Error in connection",e)
 
 def insert_pokemons():
 
@@ -182,7 +181,7 @@ def insert_pokemons():
 
     except Exception as e:
         
-        print("Error in connection")
+        print("Error in connection",e)
 
 insert_types()
 insert_abilitys()
