@@ -183,8 +183,72 @@ def insert_pokemons():
         
         print("Error in connection",e)
 
-insert_types()
-insert_abilitys()
-insert_egg_group()
-insert_generations()
-insert_pokemons()
+def insert_pokemon_type():
+
+    print ("Trying to insert Pokemons and respective Types.")
+
+    try:
+
+        connection = psycopg2.connect(**DB_CONFIG)
+        cursor = connection.cursor()
+        print("Connection with PostgreSQL made with sucess.")
+
+        for pokemon_number in range(1,1026):
+
+            response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon_number}")
+        
+            if response.status_code == 200:
+
+                dados = response.json()
+
+                if len(dados['types']) == 1:
+
+                    response1 = requests.get(dados['types'][0]['type']['url'])
+
+                    if response1.status_code == 200:
+
+                        slot1 = response1.json()
+                    
+                        sql = """INSERT INTO pokemon_type(pokemon_id, type_id)
+                                VALUES (%s, %s);"""
+
+                        valores = (dados['id'], slot1['id']) 
+
+                        cursor.execute(sql,valores)
+                        print(f"Insert {dados['name']} type: {dados['id']} ID {slot1['id']} TYPE_ID")
+
+                        connection.commit()
+
+                
+                else:
+
+                    response1 = requests.get(dados['types'][0]['type']['url'])
+                    response2 = requests.get(dados['types'][1]['type']['url'])
+
+                    if response1.status_code == 200 and response2.status_code == 200:
+                        
+                        slot1 = response1.json()
+                        slot2 = response2.json()
+                    
+                        sql = """INSERT INTO pokemon_type(pokemon_id, type_id)
+                                VALUES (%s, %s);"""
+
+                        valores1 = (dados['id'], slot1['id']) 
+                        cursor.execute(sql,valores1)
+
+                        valores2 = (dados['id'], slot2['id'])
+                        cursor.execute(sql,valores2)
+
+                        print(f"Insert {dados['name']} types: ID {dados['id']} TYPE_ID1 {slot1['id']} TYPE_ID2 {slot2['id']}")
+                        connection.commit()
+                
+    except Exception as e:
+        
+        print("Error in connection",e)
+
+# insert_types()
+# insert_abilitys()
+# insert_egg_group()
+# insert_generations()
+# insert_pokemons()
+insert_pokemon_type()
