@@ -203,44 +203,33 @@ def insert_pokemon_type():
 
                 if len(dados['types']) == 1:
 
-                    response1 = requests.get(dados['types'][0]['type']['url'])
-
-                    if response1.status_code == 200:
-
-                        slot1 = response1.json()
+                    type_id1 = int(dados['types'][0]['type']['url'].split('/')[-2])
                     
-                        sql = """INSERT INTO pokemon_type(pokemon_id, type_id)
-                                VALUES (%s, %s);"""
+                    sql = """INSERT INTO pokemon_type(pokemon_id, type_id)
+                            VALUES (%s, %s);"""
 
-                        valores = (dados['id'], slot1['id']) 
+                    valores1 = (dados['id'], type_id1) 
+                    cursor.execute(sql,valores1)
 
-                        cursor.execute(sql,valores)
-                        print(f"Insert {dados['name']} type: {dados['id']} ID {slot1['id']} TYPE_ID")
-
-                        connection.commit()
-
+                    print(f"Insert {dados['name']} types: ID {dados['id']} TYPE_ID1 {type_id1}")
+                    connection.commit()
                 
                 else:
 
-                    response1 = requests.get(dados['types'][0]['type']['url'])
-                    response2 = requests.get(dados['types'][1]['type']['url'])
-
-                    if response1.status_code == 200 and response2.status_code == 200:
-                        
-                        slot1 = response1.json()
-                        slot2 = response2.json()
+                    type_id1 = int(dados['types'][0]['type']['url'].split('/')[-2])
+                    type_id2 = int(dados['types'][1]['type']['url'].split('/')[-2])
                     
-                        sql = """INSERT INTO pokemon_type(pokemon_id, type_id)
-                                VALUES (%s, %s);"""
+                    sql = """INSERT INTO pokemon_type(pokemon_id, type_id)
+                            VALUES (%s, %s);"""
 
-                        valores1 = (dados['id'], slot1['id']) 
-                        cursor.execute(sql,valores1)
+                    valores1 = (dados['id'], type_id1) 
+                    cursor.execute(sql,valores1)
 
-                        valores2 = (dados['id'], slot2['id'])
-                        cursor.execute(sql,valores2)
+                    valores2 = (dados['id'], type_id2)
+                    cursor.execute(sql,valores2)
 
-                        print(f"Insert {dados['name']} types: ID {dados['id']} TYPE_ID1 {slot1['id']} TYPE_ID2 {slot2['id']}")
-                        connection.commit()
+                    print(f"Insert {dados['name']} types: ID {dados['id']} TYPE_ID1 {type_id1} TYPE_ID2 {type_id2}")
+                    connection.commit()
                 
     except Exception as e:
         
@@ -266,21 +255,17 @@ def insert_pokemon_ability():
 
                 if len(dados['abilities']) == 3:
 
-                    response1 = requests.get(dados['abilities'][0]['ability']['url'])
-                    response2 = requests.get(dados['abilities'][1]['ability']['url'])
-                    response3 = requests.get(dados['abilities'][2]['ability']['url'])
-
-                    slot1 = response1.json()
-                    slot2 = response2.json()
-                    slot3 = response3.json()
+                    ability_id1 = int(dados['abilities'][0]['ability']['url'].split('/')[-2])
+                    ability_id2 = int(dados['abilities'][1]['ability']['url'].split('/')[-2])
+                    ability_id3 = int(dados['abilities'][2]['ability']['url'].split('/')[-2])
 
                     sql = """INSERT INTO pokemon_ability(pokemon_id, ability_id, is_hidden)
                             VALUES (%s, %s, %s)"""
                     
 
-                    valores1 = (dados['id'],slot1['id'],dados['abilities'][0]['is_hidden'])
-                    valores2 = (dados['id'],slot2['id'],dados['abilities'][1]['is_hidden'])
-                    valores3 = (dados['id'],slot3['id'],dados['abilities'][2]['is_hidden'])
+                    valores1 = (dados['id'],ability_id1,dados['abilities'][0]['is_hidden'])
+                    valores2 = (dados['id'],ability_id2,dados['abilities'][1]['is_hidden'])
+                    valores3 = (dados['id'],ability_id3,dados['abilities'][2]['is_hidden'])
 
 
                     cursor.execute(sql, valores1)
@@ -289,50 +274,46 @@ def insert_pokemon_ability():
 
                     connection.commit()
 
-                    print(f"Insert {dados['name']} abilities:\n SLOT_1 \nNAME {slot1['name']}\nID {slot1['id']}")
-                    print(f"SLOT_2:\nNAME {slot2['name']}\nID {slot2['id']}")
-                    print(f"SLOT_3:\nNAME {slot3['name']}\nID {slot3['id']}\n")
+                    print(f"Insert {valores1[0]} abilities:\n SLOT_1 \nNAME {dados['abilities'][0]['ability']['name']}\nID {ability_id1}")
+                    print(f"SLOT_2 \nNAME {dados['abilities'][1]['ability']['name']}\nID {ability_id2}")
+                    print(f"SLOT_3 \nNAME {dados['abilities'][2]['ability']['name']}\nID {ability_id3}")
 
                     
 
                 elif len(dados['abilities']) == 2:
 
-                    response1 = requests.get(dados['abilities'][0]['ability']['url'])
-                    response2 = requests.get(dados['abilities'][1]['ability']['url'])
-
-                    slot1 = response1.json()
-                    slot2 = response2.json()
+                    ability_id1 = int(dados['abilities'][0]['ability']['url'].split('/')[-2])
+                    ability_id2 = int(dados['abilities'][1]['ability']['url'].split('/')[-2])
 
                     sql = """INSERT INTO pokemon_ability(pokemon_id, ability_id, is_hidden)
                             VALUES (%s, %s, %s)"""
-                    
-                    valores1 = (dados['id'],slot1['id'],dados['abilities'][0]['is_hidden'])
-                    valores2 = (dados['id'],slot2['id'],dados['abilities'][1]['is_hidden'])
+
+                    valores1 = (dados['id'],ability_id1,dados['abilities'][0]['is_hidden'])
+                    valores2 = (dados['id'],ability_id2,dados['abilities'][1]['is_hidden'])
 
                     cursor.execute(sql, valores1)
                     cursor.execute(sql, valores2)
 
                     connection.commit()
 
-                    print(f"Insert {dados['name']} abilities:\n SLOT_1 \nNAME {slot1['name']}\nID {slot1['id']}")
-                    print(f"SLOT_2:\nNAME {slot2['name']}\nID {slot2['id']}\n")
+                    print(f"Insert {valores1[0]} abilities:\n SLOT_1 \nNAME {dados['abilities'][0]['ability']['name']}\nID {ability_id1}")
+                    print(f"SLOT_2 \nNAME {dados['abilities'][1]['ability']['name']}\nID {ability_id2}")
 
                 else:
 
-                    response1 = requests.get(dados['abilities'][0]['ability']['url'])
-
-                    slot1 = response1.json()
+                    ability_id1 = int(dados['abilities'][0]['ability']['url'].split('/')[-2])
 
                     sql = """INSERT INTO pokemon_ability(pokemon_id, ability_id, is_hidden)
                             VALUES (%s, %s, %s)"""
-                    
-                    valores1 = (dados['id'],slot1['id'],dados['abilities'][0]['is_hidden'])
+
+                    valores1 = (dados['id'],ability_id1,dados['abilities'][0]['is_hidden'])
 
                     cursor.execute(sql, valores1)
 
                     connection.commit()
 
-                    print(f"Insert {dados['name']} abilities: \n SLOT_1\nNAME {slot1['name']}\nID {slot1['id']}\n")
+                    print(f"Insert {valores1[0]} abilities:\n SLOT_1 \nNAME {dados['abilities'][0]['ability']['name']}\nID {ability_id1}")
+
 
     except Exception as e:
 
