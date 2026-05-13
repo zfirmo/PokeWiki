@@ -1,62 +1,81 @@
-# Pokewiki Database 
+# PokeWiki | Fullstack Project
 
-This project contains the database infrastructure and initial schema for the Pokewiki application. It uses Docker to orchestrate PostgreSQL and pgAdmin.
+PokeWiki is an application designed to explore data modeling, containerization, and backend integration. The project focuses on building a scalable environment for managing Pokémon data, using the PokeAPI and infrastructure tools.
 
-## Technologies 
-* **Database:** PostgreSQL 15
-* **Management:** pgAdmin 4
-* **Containerization:** Docker & Docker Compose
+## Architecture & Infrastructure
 
-## How to run 🏃‍♂️
-To get the project up and running locally, follow these steps:
+The project is built with a focus on Environment Isolation and Data Integrity.
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/zfirmo/PokeWiki
-   cd PokeWiki
-   ```
-   
-2. **Start the containers**:
+*   **Containerization:** The entire ecosystem uses Docker and Docker Compose, ensuring functionality across different development environments.
 
-  ```powershell
-  docker-compose up -d
-  ```
+*   **Database:** Powered by PostgreSQL 15.
 
-3. **Access pgAdmin**:
+*   **Administration:** pgAdmin 4 is integrated into the Docker network for database monitoring and management.
 
-- URL: http://localhost:8080
 
-- Email: admin@admin.com
 
-- Password: admin
+## Data Modeling
 
- Project Structure
+A significant portion of this project was dedicated to the logical design phase before the code was written. This ensures that the database can handle complex relationships such as evolutions and multiple types per Pokémon.
 
-/sql: Contains all .sql scripts for database initialization.
+### Database Schema (ERD)
+The schema was planned in DrawSQL to handle:
+*   **Many-to-Many Relationships:** Implemented for `Pokemon_Type` and `Pokemon_Ability` to ensure normalized data.
 
-docker-compose.yml: Docker configuration for the services.
+*   **Recursive Relationships:** Designed within the `Evolution` table to trakc complex evolution chains.
 
- Database Credentials
+*   **Data Constraints:** Strict use of Foreign Key and Data Type to prevent inconsistency.
 
-- User: zago!
-- Password: secretpassword
-- Database: pokewiki
-- Port: 5432
+![Using DrawSQL](images/scheme_on_drawsql.jpg)
 
-## Creative Process 
+### Planning with Miro
+I used Miro as a centralized planning space for project management. This includes:
 
-During the process of making this project I used many tools for making my project alive, and making easier to organize my thinking process, the tools I used was:
+*   Task Management: Tracking "In-Progress" and "Done" states for database initialization scripts.
 
-### Miro
+*   System Mapping: Defining the communication flow between the Frontend, Server, and Database.
 
-For organizing my project and write down my own to-do list, organizing in a way that the DataBase System works fine.
+> **Easter Egg:** The project logo of the project features the Wiki Berry, an real in-game item.
 
-EasterEgg -> The logo is a little joke with an actual berry in the games named Wiki Berry
+![Using Miro](images/project_on_miro.jpg)
 
-![Using Miro](images/miro.png)
+---
 
-### DrawSQL
+## Getting Started
 
-An site for making an visual schema, I made one before setting up the PostgreSQL tables, this way I know exactly waht I'm going to do and help my to-do list in Miro
+### Prerequisites
 
-![Using DrawSQL](images/drawsql.png)
+*   Docker & Docker Compose installed.
+
+*   Git.
+
+### Installation & Execution
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone [https://github.com/zfirmo/PokeWiki](https://github.com/zfirmo/PokeWiki)
+    cd PokeWiki
+    ```
+
+2.  **Spin up the Infrastructure:**
+
+    ```bash
+    docker-compose up -d
+    ```
+
+### Service Access & Credentials
+
+| Service | URL | Credentials |
+| :--- | :--- | :--- |
+| **pgAdmin 4** | `http://localhost:8080` | `admin@admin.com` / `admin` |
+| **PostgreSQL** | `localhost:5432` | `zago` / `secretpassword` |
+
+**Note:** The database `pokewiki` is automatically initialized using the scripts located in the `/sql` directory.
+
+## Project Structure
+```text
+├── /sql                # DDL and DML scripts for DB initialization
+├── /images             # Documentation assets and diagrams
+├── docker-compose.yml  # Infrastructure orchestration
+└── README.md           # Project documentation
