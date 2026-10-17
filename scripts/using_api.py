@@ -183,8 +183,9 @@ def insert_pokemons():
         
         print("Error in connection",e)
 
-insert_types()
-insert_abilitys()
-insert_egg_group()
-insert_generations()
-insert_pokemons()
+def main():
+    insert_types()
+    insert_abilitys()
+    insert_egg_group()
+    insert_generations()
+    insert_pokemons()

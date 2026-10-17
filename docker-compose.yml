@@ -29,11 +29,12 @@ services:
       build: .
       container_name: pokewiki_nodejs
       restart: always
+      working_dir: /app/backend
       ports:
         - "3000:3000"
       volumes:
-        - .:/app
-        - /app/node_modules
+        - ./backend:/app/backend
+        - /app/backend/node_modules
       environment:
         - DATABASE_URL=postgresql://zago:secretpassword@db:5432/pokewiki
       depends_on:
